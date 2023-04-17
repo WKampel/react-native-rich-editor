@@ -1,7 +1,11 @@
 import {FC} from 'react';
-import {Button, SafeAreaView, StyleSheet, View} from 'react-native';
-import {WebView} from 'react-native-webview';
+import {Button, SafeAreaView, StyleSheet, View, Platform} from 'react-native';
 import {INavigation} from './interface';
+
+import {WebView as MobileWebView} from 'react-native-webview';
+import {WebView as WebWebView} from 'react-native-web-webview';
+
+const WebView = Platform.OS === 'web' ? WebWebView : MobileWebView;
 
 interface IProps {
   navigation: INavigation;

@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-import {WebView} from 'react-native-webview';
 import {actions, messages} from './const';
 import {Keyboard, Platform, StyleSheet, TextInput, View} from 'react-native';
 import {createHTML} from './editor';
+
+import {WebView as MobileWebView} from 'react-native-webview';
+import {WebView as WebWebView} from 'react-native-web-webview';
+
+const WebView = Platform.OS === 'web' ? WebWebView : MobileWebView;
 
 const PlatformIOS = Platform.OS === 'ios';
 
