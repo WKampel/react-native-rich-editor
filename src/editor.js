@@ -119,7 +119,7 @@ function createHTML(options = {}) {
         }
 
         function _postMessage(data){
-            exports.window.postMessage(JSON.stringify({...data, instanceId: ${instanceId}}));
+            exports.window.postMessage(JSON.stringify({...data, instanceId: '${instanceId}'}));
 
         }
         function postAction(data){
