@@ -41,6 +41,7 @@ function createHTML(options = {}) {
     firstFocusEnd = true,
     useContainer = true,
     styleWithCSS = false,
+    instanceId = 'none',
   } = options;
   //ERROR: HTML height not 100%;
   return `
@@ -118,7 +119,8 @@ function createHTML(options = {}) {
         }
 
         function _postMessage(data){
-            exports.window.postMessage(JSON.stringify(data));
+            exports.window.postMessage(JSON.stringify({...data, instanceId: ${instanceId}}));
+
         }
         function postAction(data){
             editor.content.contentEditable === 'true' && _postMessage(data);

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {actions, messages} from './const';
 import {Keyboard, Platform, StyleSheet, TextInput, View} from 'react-native';
+import {actions, messages} from './const';
 import {createHTML} from './editor';
 
-import {WebView as MobileWebView} from 'react-native-webview';
 import {WebView as WebWebView} from 'react-native-web-webview';
+import {WebView as MobileWebView} from 'react-native-webview';
+
+import uuid from 'react-native-uuid';
 
 const WebView = Platform.OS === 'web' ? WebWebView : MobileWebView;
 
@@ -43,6 +45,8 @@ export default class RichTextEditor extends Component {
     that._focus = false;
     that.layout = {};
     that.selectionChangeListeners = [];
+    that.instanceId = uuid.v4();
+
     const {
       editorStyle: {backgroundColor, color, placeholderColor, initialCSSText, cssText, contentCSSText, caretColor} = {},
       html,
@@ -87,6 +91,7 @@ export default class RichTextEditor extends Component {
             firstFocusEnd,
             useContainer,
             styleWithCSS,
+            instanceId: that.instanceId,
           }),
       },
       keyboardHeight: 0,
@@ -146,6 +151,10 @@ export default class RichTextEditor extends Component {
     const that = this;
     const {onFocus, onBlur, onChange, onPaste, onKeyUp, onKeyDown, onInput, onMessage, onCursorPosition} = that.props;
     try {
+      if (message.instanceId !== that.instanceId) {
+        return;
+      }
+
       const message = JSON.parse(event.nativeEvent.data);
       const data = message.data;
       switch (message.type) {
