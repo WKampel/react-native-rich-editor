@@ -238,7 +238,7 @@ export default class RichTextEditor extends Component {
    * @private
    */
   sendAction(type, action, data, options) {
-    let jsonString = JSON.stringify({type, name: action, data, options});
+    let jsonString = JSON.stringify({type, name: action, data, options, instanceId: that.instanceId});
     if (!this.unmount && this.webviewBridge) {
       this.webviewBridge.postMessage(jsonString);
     }
